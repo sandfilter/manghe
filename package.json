@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@lucky-canvas/uni": "^0.0.13",
+    "uview-ui": "^1.8.4"
+  }
+}
