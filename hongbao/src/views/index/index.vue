@@ -71,8 +71,14 @@ const getCodeFn = async () => {
   let res:any = await $post(url, data)
   loading.value = false;
   if(res.code == 200) {
+    if(res.data == '验证码已发送') {
+      showNotify(res.data)
+      return;
+    }
     codeFn()
     store.code = parseInt(res.data)
+  } else {
+    showNotify(res.message)
   }
 }
 
