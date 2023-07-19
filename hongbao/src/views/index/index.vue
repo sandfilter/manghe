@@ -1,5 +1,8 @@
 <template>
   <article class="index-index">
+    <div class="load-cloud" v-if="loading" >
+      <van-loading size="24" color="#039f6a"/>
+    </div>
     <div class="tags" @click="layerShow='pact'" >规则<img src="@/assets/img/img04.png" class="icon" alt=""></div>
     <header class="page-title"></header>
     <div class="form-box">
@@ -9,7 +12,7 @@
       </div>
       <div class="form-list clearfix ">
         <span class="form-icon"><img class="icon-code" src="@/assets/img/img06.png" alt=""></span>
-        <input type="text" placeholder="手机验证码" class="input code" v-model="code" >
+        <input type="number" placeholder="手机验证码" class="input code" v-model="code" >
         <button v-show="codeShow"  @click="getCodeFn" class="get-code">获取验证码</button>
         <button v-show="!codeShow" disabled class="wait-code">({{ codeTimer }}s)后获取</button>
       </div>
@@ -27,17 +30,8 @@
       <div @click="layerShow = ''" class="close"><img src="@/assets/img/img07.png" alt=""></div>
       <div class="show-text">
         <h3 class="text-title">活动规则：</h3>
-        <p>1.限活动页使用ask觉得哈里斯接电话啊</p>
-        <p>1.限活动页使用ask觉得哈里斯接电话啊</p>
-        <p>1.限活动页使用ask觉得哈里斯接电话啊</p>
-        <p>1.限活动页使用ask觉得哈里斯接电话啊</p>
-        <p>1.限活动页使用ask觉得哈里斯接电话啊</p>
-        <p>1.限活动页使用ask觉得哈里斯接电话啊</p>
-        <p>1.限活动页使用ask觉得哈里斯接电话啊</p>
-        <p>1.限活动页使用ask觉得哈里斯接电话啊</p>
-        <p>1.限活动页使用ask觉得哈里斯接电话啊</p>
-        <p>1.限活动页使用ask觉得哈里斯接电话啊</p>
-        <p>1.限活动页使用ask觉得哈里斯接电话啊</p>
+        <p>1.分享好友助力+100积分</p>
+        <p>2.使用发微信、打电话、导航等功能+10积分</p>
       </div>
     </div>
 
@@ -46,32 +40,74 @@
 
 <script lang="ts" setup >
 import { ref } from 'vue';
-import { showNotify, closeNotify } from 'vant';
+import { showNotify, closeNotify, loadingProps } from 'vant';
+import { useRoute } from 'vue-router';
 import useCode from '@/hooks/useCode'
 import phoneH from '@/hooks/phoneH';
+import {$post} from '@/assets/js/axios'
+import { configStore } from '@/store/config';
+
 const {code, codeTimer, codeShow, codeFn} = useCode(60, 1, 1000)
 const {phone, phoneFn} = phoneH()
+const store = configStore()
+
+const route = useRoute()
+
 
 const layerShow = ref<string>('')
+const loading = ref<boolean>(false)
 
-const getCodeFn = () => {
+const resCode = ref<number>()
+const getCodeFn = async () => {
   if(!phoneFn()) {
     showNotify('手机号码错误')
     return;
   }
-  codeFn()
+  loading.value = true;
+  let url = `http://ytadmin-test.tmap.com.cn:8002/api/userSharing/sendCode`
+  let data = {
+    phone: phone.value
+  }
+  let res:any = await $post(url, data)
+  loading.value = false;
+  if(res.code == 200) {
+    codeFn()
+    store.code = parseInt(res.data)
+  }
 }
 
-const submitFn = () => {
+
+console.log(store.code);
+
+const submitFn = async () => {
   if(!phoneFn()) {
     showNotify('手机号码错误')
     return;
   }
-  layerShow.value = 'ok'
+  console.log(code.value , resCode.value, 'code');
+  if(!code.value ||  code.value !== store.code) {
+     showNotify('验证码错误')
+    return;
+  }
+  let userid = (route.query.userid as string).replace(/\"/g, '')
+  let url = 'http://ytadmin-test.tmap.com.cn:8002/api/userSharing/register'
+  let data = {
+    phone: phone.value,
+    userId: userid
+  }
+  loading.value = true;
+  let res:any = await $post(url, data);
+  loading.value = false;
+  if(res.code == 200) {
+    layerShow.value = 'ok'
+  } else {
+    showNotify(res.message)
+  }
 }
+
 
 const openAppFn = () => {
-  console.log('openapp');
+  window.location.href = 'https://sj.qq.com/appdetail/com.yantu.tmap'
   
 }
 
