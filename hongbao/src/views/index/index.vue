@@ -106,6 +106,10 @@ const submitFn = async () => {
   let res:any = await $post(url, data);
   loading.value = false;
   if(res.code == 200) {
+    if(res.data == '当前用户已助力') {
+      showNotify('当前用户已助力')
+      return;
+    }
     layerShow.value = 'ok'
   } else {
     showNotify(res.message)
@@ -114,8 +118,28 @@ const submitFn = async () => {
 
 
 const openAppFn = () => {
-  window.location.href = 'https://sj.qq.com/appdetail/com.yantu.tmap'
-  
+  const u = navigator.userAgent;
+  const isWeixin = u.toLowerCase().indexOf('micromessenger') !== -1; // 微信内
+  const isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端
+  const isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+  if(isWeixin) {
+        alert('请在浏览器上打开')
+    } else {
+        //android端
+      if (isAndroid) {
+        //安卓app的scheme协议
+        window.location.href = 'taobao://';
+        setTimeout(function () {
+        let hidden = window.document.hidden || window.document.mozHidden || window.document.msHidden || window.document.webkitHidden
+        if (typeof hidden == "undefined" || hidden == false) {
+          //应用宝下载地址 (emmm 找不到淘宝应用宝的地址，这里放的是 lucky coffee 地址)
+          window.location.href = "https://sj.qq.com/appdetail/com.yantu.tmap";
+        }
+      }, 2000);
+          
+      }
+    window.location.href = 'https://sj.qq.com/appdetail/com.yantu.tmap'
+  }
 }
 
 </script>

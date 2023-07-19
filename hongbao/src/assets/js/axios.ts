@@ -5,8 +5,10 @@ import { resolve } from "path";
 
 let url = window.location.href;
 
-const baseURL: string = import.meta.env.VITE_BASE_URL;
-const apikey: string = import.meta.env.VITE_API;
+const baseURL: string = "/api";
+// const apikey: string = import.meta.env.VITE_API;
+
+// console.log(import.meta.env.VITE_BASE_URL);
 
 interface reqTs {
   [key: string]: any;
