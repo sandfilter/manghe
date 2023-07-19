@@ -123,22 +123,23 @@ const openAppFn = () => {
   const isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端
   const isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
   if(isWeixin) {
-        alert('请在浏览器上打开')
+      window.location.href = 'https://sj.qq.com/appdetail/com.yantu.tmap'
     } else {
-        //android端
+      //android端
       if (isAndroid) {
         //安卓app的scheme协议
-        window.location.href = 'taobao://';
+        window.location.href = 'pabb6628://';
         setTimeout(function () {
-        let hidden = window.document.hidden || window.document.mozHidden || window.document.msHidden || window.document.webkitHidden
-        if (typeof hidden == "undefined" || hidden == false) {
-          //应用宝下载地址 (emmm 找不到淘宝应用宝的地址，这里放的是 lucky coffee 地址)
-          window.location.href = "https://sj.qq.com/appdetail/com.yantu.tmap";
-        }
-      }, 2000);
-          
+          let hidden = window.document.hidden || window.document.mozHidden || window.document.msHidden || window.document.webkitHidden
+          if (typeof hidden == "undefined" || hidden == false) {
+            //应用宝下载地址 (emmm 找不到淘宝应用宝的地址，这里放的是 lucky coffee 地址)
+            window.location.href = "https://sj.qq.com/appdetail/com.yantu.tmap";
+          }
+        }, 2000);
+      } else {
+        window.location.href = 'https://sj.qq.com/appdetail/com.yantu.tmap'
       }
-    window.location.href = 'https://sj.qq.com/appdetail/com.yantu.tmap'
+    
   }
 }
 
