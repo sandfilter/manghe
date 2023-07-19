@@ -12,7 +12,7 @@
       </div>
       <div class="form-list clearfix ">
         <span class="form-icon"><img class="icon-code" src="@/assets/img/img06.png" alt=""></span>
-        <input type="number" placeholder="手机验证码" class="input code" v-model="code" >
+        <input type="text" placeholder="手机验证码" class="input code" v-model="code" >
         <button v-show="codeShow"  @click="getCodeFn" class="get-code">获取验证码</button>
         <button v-show="!codeShow" disabled class="wait-code">({{ codeTimer }}s)后获取</button>
       </div>
@@ -77,16 +77,16 @@ const getCodeFn = async () => {
     }
     showNotify({ type: 'success', message: '验证码已发送' });
     codeFn()
-    store.code = parseInt(res.data)
+    store.code = res.data
   } else {
     showNotify(res.message)
   }
 }
 
 
-console.log(store.code);
-
 const submitFn = async () => {
+  console.log(code.value);
+  
   if(!phoneFn()) {
     showNotify('手机号码错误')
     return;

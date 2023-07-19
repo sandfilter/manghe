@@ -8,7 +8,7 @@ export const configStore = defineStore("config", {
       holder: String(""),
       devSize: "large", // 屏幕尺寸监听 pc pad  phone
       goods: {},
-      code: Number(),
+      code: String(""),
     };
   },
   persist: true,

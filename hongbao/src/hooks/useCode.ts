@@ -5,7 +5,7 @@ export default function useCode(
   end: number = 1,
   time: number = 1000
 ) {
-  const code = ref<number>();
+  const code = ref<string>("");
   const codeTimer = ref<number>(start);
   const codeShow = ref<boolean>(true);
 
