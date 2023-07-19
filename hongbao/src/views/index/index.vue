@@ -72,9 +72,10 @@ const getCodeFn = async () => {
   loading.value = false;
   if(res.code == 200) {
     if(res.data == '验证码已发送') {
-      showNotify(res.data)
+      showNotify('请勿重复提交')
       return;
     }
+    showNotify({ type: 'success', message: '验证码已发送' });
     codeFn()
     store.code = parseInt(res.data)
   } else {
