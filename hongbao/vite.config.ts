@@ -14,7 +14,7 @@ let pathUrl = (url: string) => {
 // https://vitejs.dev/config/
 export default ({ mode }) => {
   const env = loadEnv(mode, process.cwd());
-  console.log(env.VITE_ENV);
+  console.log(mode);
   return defineConfig({
     base: "./", // 设置公共基础路径
     plugins: [

@@ -19,7 +19,6 @@
       <div class="form-btn" @click="submitFn"  >点击助力</div>
     </div>
 
-
     <div class="cloud" v-show="layerShow!== ''" ></div>
     <div class="layer-ok" v-show="layerShow == 'ok'" >
       <div @click="layerShow = ''" class="close"><img src="@/assets/img/img07.png" alt=""></div>
@@ -149,23 +148,23 @@ const openAppFn = () => {
 
 .index-index{
   box-sizing: border-box; position: relative;
-  width:100%; min-height:100vh; padding-top: vw(170); padding-bottom: vw(145);
+  width:100%; min-height:100vh;  padding-bottom: vw(145);
   background: url('@/assets/img/img01.png') no-repeat center top /100% #cae9a1;
   .tags{
     display: inline-block; position: absolute;
-    font-size: vw(24); height:vw(44); line-height: vw(44); padding:0 vw(27); right:0; top:vw(115); border-top-left-radius: vw(22); border-bottom-left-radius: vw(22);
+    font-size: vw(24); height:vw(44); line-height: vw(44); padding:0 vw(27); right:0; top:vw(115); border-top-left-radius: vw(22); border-bottom-left-radius: vw(22); z-index: 10;
     color:#fff; background-color: rgba(3, 98, 65, 0.6);
     .icon{
       height:vw(24); width:vw(24);
     }
   }
   .page-title{
-    width:vw(598); height:vw(181); margin:0 auto 0;
-    background: url('@/assets/img/img02.png') no-repeat center /100%;
+    width:vw(598); height:vw(1376); margin:0 auto 0;
+    // background: url('@/assets/img/img02.png') no-repeat center /100%;
   }
   .form-box{
     position: relative;
-    width:vw(690); padding:vw(95) 0 vw(80); margin:vw(930) auto 0; border-radius: vw(30);
+    width:vw(690); padding:vw(95) 0 vw(80); margin:vw(-90) auto 0; border-radius: vw(30);
     background-color: #e7f9cf;
     &::after{
       content: '';
